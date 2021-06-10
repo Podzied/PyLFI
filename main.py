@@ -24,15 +24,15 @@ class Main:
 	def filter_output(self, output):
 		if "/bin/" in output: # If "/bin/" in response continue
 			if "root" in output:
-				sys.exit("\nTarget is Vulnerable!\nWebserver is running on root.") # If "root" in response server is vulnerable and on root
+				print("\nTarget is Vulnerable!\nWebserver is running on root.") # If "root" in response server is vulnerable and on root
 			else:
-				sys.exit("\nTarget is Vulnerable!") # If not "root" server is still vulnerable, just not on root
+				print("\nTarget is Vulnerable!") # If not "root" server is still vulnerable, just not on root
 
 		elif "/home/" in output: # If "/bin/" not found then look for "/home/"
-			sys.exit("Target is Vulnerable!") # If found return success
+			print("Target is Vulnerable!") # If found return success
 
 		else:
-			sys.exit("Target is secure and not vulnerable to L.F.I.") # If none were found return statement saying that target is secure
+			print("Target is secure and not vulnerable to L.F.I.") # If none were found return statement saying that target is secure
 
 
 if __name__ == '__main__':
