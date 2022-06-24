@@ -1,6 +1,8 @@
-#Python Local FIle Inclusion Vulnerability Checker 🔎
+# Python Local FIle Inclusion Vulnerability Checker 🔎
 
-This script uses "/etc/passwd" to see if a website is vulnerable to [Local File Inclusion](https://www.acunetix.com/blog/articles/local-file-inclusion-lfi/)
+This script uses "/etc/passwd" path to see if a website is vulnerable to [Local File Inclusion Vulnerability](https://www.acunetix.com/blog/articles/local-file-inclusion-lfi/)
+
+It then scans the webserver to see if it running under root or a different user with less privileges
 ------------------------------------------------------------------------------------------
 
 
