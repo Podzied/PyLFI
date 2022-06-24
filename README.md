@@ -10,7 +10,7 @@ We are not responsible with what you do with this program and your intended use
 
 # Run on Gitpod (Incognito)
 <a href="https://gitpod.io/#https://github.com/Podzied/PyLFI">
-<img src="https://gitpod.io/images/gitpod.svg" width=30%/>
+<img src="[https://gitpod.io/images/gitpod.svg](https://gitpod.io/static/media/gitpod.a7ab6752.svg)" width=30%/>
 
   
   
