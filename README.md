@@ -1,5 +1,9 @@
-# PyLFI
-Local File Inclusion Vulnerability Checker. Meant for web application pentation testing. 
+### PyLFI
+Python Local FIle Inclusion Vulnerability Checker
+
+This script uses "=
+---------------------------------------------------------------------------------------
+
 
 NOT RESPONSIBLE FOR WHAT YOU DO WITH THIS!!
 
